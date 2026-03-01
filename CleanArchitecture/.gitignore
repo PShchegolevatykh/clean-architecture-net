@@ -1,0 +1,24 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# IDEs
+.idea/
+.vscode/
+.vs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# HTTP Client
+.http-client/
+
+# Build and configuration
+*.swp
+*~
+*.log

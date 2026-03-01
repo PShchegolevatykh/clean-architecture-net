@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="src/CleanArchitecture.Domain/CleanArchitecture.Domain.csproj" />
+  <Folder Name="/tests/">
+    <Project Path="tests/CleanArchitecture.Application.Tests/CleanArchitecture.Application.Tests.csproj" />
+    <Project Path="tests/CleanArchitecture.Domain.Tests/CleanArchitecture.Domain.Tests.csproj" />
+    <Project Path="tests/CleanArchitecture.Infrastructure.Tests/CleanArchitecture.Infrastructure.Tests.csproj" />
+  </Folder>
+  <Project Path="src/CleanArchitecture.Application/CleanArchitecture.Application.csproj" />
+  <Project Path="src/CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj" />
+  <Project Path="src/CleanArchitecture.Web/CleanArchitecture.Web.csproj" />
+</Solution>
