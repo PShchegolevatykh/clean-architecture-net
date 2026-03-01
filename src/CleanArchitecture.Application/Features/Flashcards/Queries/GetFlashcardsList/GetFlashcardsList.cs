@@ -6,13 +6,7 @@ namespace CleanArchitecture.Application.Features.Flashcards.Queries.GetFlashcard
 
 public record GetFlashcardsListQuery : IRequest<List<FlashcardDto>>;
 
-public record FlashcardDto
-{
-    public Guid Id { get; init; }
-    public string Front { get; init; } = string.Empty;
-    public string Back { get; init; } = string.Empty;
-    public int Difficulty { get; init; }
-}
+public record FlashcardDto(Guid Id, string Front, string Back, int Difficulty);
 
 public class GetFlashcardsListHandler(IApplicationDbContext context) : IRequestHandler<GetFlashcardsListQuery, List<FlashcardDto>>
 {
@@ -20,13 +14,7 @@ public class GetFlashcardsListHandler(IApplicationDbContext context) : IRequestH
     {
         return await context.Flashcards
             .AsNoTracking()
-            .Select(f => new FlashcardDto
-            {
-                Id = f.Id,
-                Front = f.Front,
-                Back = f.Back,
-                Difficulty = f.Difficulty
-            })
+            .Select(f => new FlashcardDto(f.Id, f.Front, f.Back, f.Difficulty))
             .ToListAsync(cancellationToken);
     }
 }

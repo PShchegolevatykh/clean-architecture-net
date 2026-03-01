@@ -5,13 +5,7 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Features.Flashcards.Commands.CreateFlashcard;
 
-public record CreateFlashcardCommand : IRequest<Guid>
-{
-    public string Front { get; init; } = string.Empty;
-    public string Back { get; init; } = string.Empty;
-    public string? Description { get; init; }
-    public int Difficulty { get; init; }
-}
+public record CreateFlashcardCommand(string Front, string Back, string? Description, int Difficulty) : IRequest<Guid>;
 
 public class CreateFlashcardValidator : AbstractValidator<CreateFlashcardCommand>
 {

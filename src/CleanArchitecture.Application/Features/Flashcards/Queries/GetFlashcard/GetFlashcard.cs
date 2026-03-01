@@ -8,15 +8,7 @@ namespace CleanArchitecture.Application.Features.Flashcards.Queries.GetFlashcard
 
 public record GetFlashcardQuery(Guid Id) : IRequest<FlashcardDetailDto>;
 
-public record FlashcardDetailDto
-{
-    public Guid Id { get; init; }
-    public string Front { get; init; } = string.Empty;
-    public string Back { get; init; } = string.Empty;
-    public string? Description { get; init; }
-    public int Difficulty { get; init; }
-    public DateTime CreatedAt { get; init; }
-}
+public record FlashcardDetailDto(Guid Id, string Front, string Back, string? Description, int Difficulty, DateTime CreatedAt);
 
 public class GetFlashcardHandler(IApplicationDbContext context) : IRequestHandler<GetFlashcardQuery, FlashcardDetailDto>
 {
@@ -29,14 +21,6 @@ public class GetFlashcardHandler(IApplicationDbContext context) : IRequestHandle
         if (entity == null)
             throw new NotFoundException(nameof(Flashcard), request.Id);
 
-        return new FlashcardDetailDto
-        {
-            Id = entity.Id,
-            Front = entity.Front,
-            Back = entity.Back,
-            Description = entity.Description,
-            Difficulty = entity.Difficulty,
-            CreatedAt = entity.CreatedAt
-        };
+        return new FlashcardDetailDto(entity.Id, entity.Front, entity.Back, entity.Description, entity.Difficulty, entity.CreatedAt);
     }
 }

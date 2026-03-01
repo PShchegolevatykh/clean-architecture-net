@@ -23,23 +23,20 @@ public class CreateFlashcardHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldCreateFlashcardAndReturnId()
+    public async Task Handle_Should_CreateFlashcardAndReturnId_When_CommandIsValid()
     {
         // Arrange
-        var command = new CreateFlashcardCommand
-        {
-            Front = "Front",
-            Back = "Back",
-            Difficulty = 3
-        };
+        var command = new CreateFlashcardCommand("Front", "Back", null, 3);
+
+        var cts = new CancellationTokenSource();
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(command, cts.Token);
 
         // Assert
         result.ShouldNotBe(Guid.Empty);
         _contextMock.Verify(x => x.Flashcards.Add(It.IsAny<Flashcard>()), Times.Once);
-        _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        _contextMock.Verify(x => x.SaveChangesAsync(cts.Token), Times.Once);
     }
 
     private static Mock<DbSet<T>> CreateMockDbSet<T>(List<T> sourceList) where T : class

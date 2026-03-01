@@ -9,7 +9,7 @@ public class BaseEntityTests
     private class TestEntity : BaseEntity { }
 
     [Fact]
-    public void BaseEntity_ShouldGenerateV7Guid()
+    public void Id_Should_BeV7Guid_When_EntityIsCreated()
     {
         // Arrange & Act
         var entity = new TestEntity();
@@ -20,7 +20,7 @@ public class BaseEntityTests
     }
 
     [Fact]
-    public void BaseEntity_ShouldSetCreatedAt()
+    public void CreatedAt_Should_BeSet_When_EntityIsCreated()
     {
         // Arrange & Act
         var entity = new TestEntity();
