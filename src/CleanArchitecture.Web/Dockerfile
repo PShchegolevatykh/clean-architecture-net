@@ -7,6 +7,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
 COPY ["src/CleanArchitecture.Domain/CleanArchitecture.Domain.csproj", "src/CleanArchitecture.Domain/"]
 COPY ["src/CleanArchitecture.Application/CleanArchitecture.Application.csproj", "src/CleanArchitecture.Application/"]
 COPY ["src/CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj", "src/CleanArchitecture.Infrastructure/"]
@@ -14,11 +16,11 @@ COPY ["src/CleanArchitecture.Web/CleanArchitecture.Web.csproj", "src/CleanArchit
 RUN dotnet restore "src/CleanArchitecture.Web/CleanArchitecture.Web.csproj"
 COPY . .
 WORKDIR "/src/src/CleanArchitecture.Web"
-RUN dotnet build "CleanArchitecture.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "CleanArchitecture.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build  --no-restore
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "CleanArchitecture.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CleanArchitecture.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false --no-restore
 
 FROM base AS final
 WORKDIR /app

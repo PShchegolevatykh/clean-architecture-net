@@ -38,7 +38,16 @@ builder.Services.AddScoped<IApplicationDbContext>(provider =>
 
 // 4. Web API Services
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Info.Title = "Clean Architecture API";
+        document.Info.Version = "v1";
+        document.Info.Description = "API for Clean Architecture Flashcards Application";
+        return Task.CompletedTask;
+    });
+});
 
 var app = builder.Build();
 
@@ -46,10 +55,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Clean Architecture API v1");
+    });
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
@@ -65,7 +78,7 @@ catch (Exception ex)
 
 try
 {
-    Log.Information("Starting web host");
+    Log.Information("Starting web host in {Environment} environment", app.Environment.EnvironmentName);
     app.Run();
 }
 catch (Exception ex)
