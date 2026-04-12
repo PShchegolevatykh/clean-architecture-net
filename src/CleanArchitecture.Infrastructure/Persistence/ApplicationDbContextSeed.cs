@@ -20,9 +20,9 @@ public static class ApplicationDbContextSeed
         if (!await context.Flashcards.AnyAsync())
         {
             context.Flashcards.AddRange(
-                new Flashcard { Front = "Clean Architecture", Back = "A software design philosophy that separates the concerns of a software system into concentric layers.", Difficulty = 3 },
-                new Flashcard { Front = "CQRS", Back = "Command Query Responsibility Segregation - a pattern that separates read and update operations for a data store.", Difficulty = 4 },
-                new Flashcard { Front = "MediatR", Back = "A library that helps implement the Mediator pattern in .NET.", Difficulty = 2 }
+                Flashcard.Create("Clean Architecture", "A software design philosophy that separates the concerns of a software system into concentric layers.", null, 3),
+                Flashcard.Create("CQRS", "Command Query Responsibility Segregation - a pattern that separates read and update operations for a data store.", null, 4),
+                Flashcard.Create("MediatR", "A library that helps implement the Mediator pattern in .NET.", null, 2)
             );
 
             await context.SaveChangesAsync();

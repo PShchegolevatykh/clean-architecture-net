@@ -21,13 +21,7 @@ public class CreateFlashcardHandler(IApplicationDbContext context) : IRequestHan
 {
     public async Task<Guid> Handle(CreateFlashcardCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Flashcard
-        {
-            Front = request.Front,
-            Back = request.Back,
-            Description = request.Description,
-            Difficulty = request.Difficulty
-        };
+        var entity = Flashcard.Create(request.Front, request.Back, request.Description, request.Difficulty);
 
         context.Flashcards.Add(entity);
         await context.SaveChangesAsync(cancellationToken);
